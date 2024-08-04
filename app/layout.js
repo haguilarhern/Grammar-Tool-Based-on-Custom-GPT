@@ -5,7 +5,7 @@ import MainComponent from "@/components/MainComponent"
 const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'myAssistant',
+  title: 'Grammar and spelling assistant',
   description: 'Create your own GPT Assistant powered by OpenAI',
 }
 

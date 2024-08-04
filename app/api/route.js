@@ -4,24 +4,13 @@ import { NextResponse } from 'next/server'
 
 const dataFilePath = path.join(process.cwd(), 'db.json');
 
-export async function GET(request) {
-    var url = new URL(request.url)
-    const assistantId = url.searchParams.get("assistantId")
+export async function POST(request) {
+    const req = await request.json()
     const jsonData = await fsPromises.readFile(dataFilePath);
     const objectData = JSON.parse(jsonData);
-    let resData
-    if(assistantId!=null){
-        let getAssistant
-        if(assistantId=="new"){
-            getAssistant = null
-        }else{
-            getAssistant = objectData.assistants[assistantId]
-        }
-        resData = {openAIKey:objectData.openAIKey,assistant:getAssistant}
-    }else{
-        resData = objectData
-    }
-    return NextResponse.json(resData)
+    objectData.openAIKey = req.id
+    await fsPromises.writeFile(dataFilePath, JSON.stringify(objectData));
+    return NextResponse.json(objectData)
   
 }
 
